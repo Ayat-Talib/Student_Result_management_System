@@ -1,0 +1,54 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<h2>Results for: {{ student.name }} ({{ student.roll_no }})</h2>
+
+<h3>Existing Results</h3>
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Percentage</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <td>{{ result.subject.name }}</td>
+            <td>{{ result.marks_obtained }}</td>
+            <td>{{ result.total_marks }}</td>
+            <td>{{ result.percentage|floatformat:2 }}%</td>
+            <td>{{ result.grade }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center">No results added yet</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if total_percentage > 0 %}
+<div class="alert alert-success">
+    <strong>Overall Percentage: {{ total_percentage|floatformat:2 }}%</strong>
+</div>
+{% endif %}
+
+{% if available_subjects %}
+<h3>Add New Result</h3>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Result</button>
+        </form>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">All subjects have been added!</div>
+{% endif %}
+
+<a href="{% url 'student_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+{% endblock %}

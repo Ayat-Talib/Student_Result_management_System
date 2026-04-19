@@ -1,0 +1,53 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<h3>Top 5 Students (Average ≥ 80%)</h3>
+<table class="table table-striped">
+    <thead class="table-success">
+        <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Class</th>
+            <th>Average Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in top_students %}
+        <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.roll_no }}</td>
+            <td>{{ student.class_name }}</td>
+            <td>{{ student.avg_marks|floatformat:2 }}%</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No data available</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Class Statistics</h3>
+<table class="table table-bordered">
+    <thead class="table-info">
+        <tr>
+            <th>Class</th>
+            <th>Total Students</th>
+            <th>Average Marks</th>
+            <th>Highest Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stat in class_statistics %}
+        <tr>
+            <td>{{ stat.class_name }}</td>
+            <td>{{ stat.total_students }}</td>
+            <td>{{ stat.average_marks|floatformat:2 }}%</td>
+            <td>{{ stat.highest_marks|floatformat:2 }}%</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No data available</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f5f5f5; }
+        .container { margin-top: 20px; margin-bottom: 50px; }
+        .navbar-brand { font-weight: bold; }
+        .export-dropdown { min-width: 200px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'student_list' %}">
+                <i class="fas fa-graduation-cap"></i> Student Result Management
+            </a>
+            <div>
+                {% if user.is_authenticated %}
+                    <!-- Export Dropdown -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'export_students' %}">
+                                <i class="fas fa-users"></i> Export Students
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'export_results' %}">
+                                <i class="fas fa-chart-line"></i> Export All Results
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'export_class' class_name='Class 9' %}">
+                                Class 9 Report
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'export_class' class_name='Class 10' %}">
+                                Class 10 Report
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'export_class' class_name='Class 11' %}">
+                                Class 11 Report
+                            </a></li>
+                            <li><a class="dropdown-item" href="{% url 'export_class' class_name='Class 12' %}">
+                                Class 12 Report
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <a class="btn btn-outline-light btn-sm" href="{% url 'dashboard' %}">
+                        <i class="fas fa-chart-bar"></i> Dashboard
+                    </a>
+                    <a class="btn btn-outline-light btn-sm" href="{% url 'student_create' %}">
+                        <i class="fas fa-plus"></i> Add Student
+                    </a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i> Logout ({{ user.username }})
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
